@@ -6,11 +6,12 @@ import {
   orderRatingRequestSchema,
   registerRequestSchema,
 } from '@/utils/apiSchemas'
-import { createSessionToken, verifySessionToken } from '@/utils/session'
+import { createSessionToken, setSessionCookie, verifySessionToken } from '@/utils/session'
 
 describe('backend security and validation', () => {
   afterEach(() => {
     delete process.env.ALLOW_DEMO_AUTH
+    delete process.env.SESSION_COOKIE_SECURE
   })
 
   it('не принимает userId из query без явно включённого demo-режима', () => {
@@ -30,6 +31,38 @@ describe('backend security and validation', () => {
 
     expect(resolveRequestUserId(request as never)).toBe('user-1')
     expect(verifySessionToken(`${token}tampered`)).toBeNull()
+  })
+
+  it('не помечает cookie как Secure для локального HTTP-контейнера', () => {
+    process.env.SESSION_COOKIE_SECURE = 'false'
+    const headers: Record<string, string> = {}
+
+    setSessionCookie(
+      {
+        setHeader: (name: string, value: string) => {
+          headers[name] = value
+        },
+      } as never,
+      'user-1',
+    )
+
+    expect(headers['Set-Cookie']).not.toContain('; Secure')
+  })
+
+  it('помечает cookie как Secure при HTTPS-развёртывании', () => {
+    process.env.SESSION_COOKIE_SECURE = 'true'
+    const headers: Record<string, string> = {}
+
+    setSessionCookie(
+      {
+        setHeader: (name: string, value: string) => {
+          headers[name] = value
+        },
+      } as never,
+      'user-1',
+    )
+
+    expect(headers['Set-Cookie']).toContain('; Secure')
   })
 
   it('принимает оценки только от 1 до 5', () => {

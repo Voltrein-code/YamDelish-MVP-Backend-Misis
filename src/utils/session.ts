@@ -4,6 +4,15 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 const cookieName = 'yamdelish_session'
 const maxAge = 60 * 60 * 24 * 7
 
+const getSecureAttribute = () => {
+  const configuredValue = process.env.SESSION_COOKIE_SECURE
+
+  if (configuredValue === 'true') return '; Secure'
+  if (configuredValue === 'false') return ''
+
+  return process.env.NODE_ENV === 'production' ? '; Secure' : ''
+}
+
 const getSecret = () => {
   const secret = process.env.AUTH_SECRET
 
@@ -81,16 +90,15 @@ export const getSessionUserId = (req: NextApiRequest) => {
 }
 
 export const setSessionCookie = (res: NextApiResponse, userId: string) => {
-  const secure = process.env.NODE_ENV === 'production' ? '; Secure' : ''
-
   res.setHeader(
     'Set-Cookie',
-    `${cookieName}=${createSessionToken(userId)}; HttpOnly; Path=/; Max-Age=${maxAge}; SameSite=Lax${secure}`,
+    `${cookieName}=${createSessionToken(userId)}; HttpOnly; Path=/; Max-Age=${maxAge}; SameSite=Lax${getSecureAttribute()}`,
   )
 }
 
 export const clearSessionCookie = (res: NextApiResponse) => {
-  const secure = process.env.NODE_ENV === 'production' ? '; Secure' : ''
-
-  res.setHeader('Set-Cookie', `${cookieName}=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax${secure}`)
+  res.setHeader(
+    'Set-Cookie',
+    `${cookieName}=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax${getSecureAttribute()}`,
+  )
 }

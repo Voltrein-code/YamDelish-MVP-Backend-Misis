@@ -647,12 +647,17 @@ APP_PORT=3001 docker compose up --build
 TURSO_DATABASE_URL=libsql://your-database.turso.io
 TURSO_AUTH_TOKEN=your-token
 AUTH_SECRET=replace-with-a-long-random-secret
+SESSION_COOKIE_SECURE=true
 ```
 
 Docker Compose автоматически прочитает этот файл. Не добавляйте `.env` в Git. Значение
 `AUTH_SECRET`, заданное в `compose.yaml` по умолчанию, предназначено только для локального
 демонстрационного запуска; для общего стенда или production задайте собственный длинный
 случайный секрет.
+
+Для локального Docker-запуска по HTTP параметр `SESSION_COOKIE_SECURE` автоматически равен
+`false`, чтобы браузер сохранял cookie авторизации. При развёртывании приложения за HTTPS
+установите `SESSION_COOKIE_SECURE=true`.
 
 ### Запуск без Docker
 
@@ -772,6 +777,7 @@ npm run build
 TURSO_DATABASE_URL=libsql://your-database.turso.io
 TURSO_AUTH_TOKEN=your-token
 AUTH_SECRET=your-long-random-session-secret
+SESSION_COOKIE_SECURE=true
 ```
 
 Если переменные не заданы, используется локальная база:

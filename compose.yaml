@@ -12,6 +12,7 @@ services:
       TURSO_DATABASE_URL: "${TURSO_DATABASE_URL:-file:/app/data/sqlite.db}"
       TURSO_AUTH_TOKEN: "${TURSO_AUTH_TOKEN:-}"
       AUTH_SECRET: "${AUTH_SECRET:-local-docker-development-secret-change-me}"
+      SESSION_COOKIE_SECURE: "${SESSION_COOKIE_SECURE:-false}"
       ALLOW_DEMO_AUTH: "${ALLOW_DEMO_AUTH:-false}"
     volumes:
       - yamdelish_data:/app/data
