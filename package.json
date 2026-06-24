@@ -1,0 +1,70 @@
+{
+  "name": "yammy",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm run db:prepare && next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "test:backend": "vitest run tests/backend",
+    "benchmark:api": "node scripts/benchmark-api.mjs",
+    "lint": "eslint ./src --debug --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint ./src --fix",
+    "prettier": "prettier ./src --check --ignore-unknown",
+    "prettier:fix": "prettier ./src -w",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:prepare": "npm run db:migrate && npm run db:seed",
+    "db:seed": "tsx src/db/seed.ts",
+    "db:studio": "drizzle-kit studio",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,md}": [
+      "prettier --write"
+    ],
+    "*.js": "eslint --cache --fix"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^2.2.0",
+    "@libsql/client": "^0.14.0",
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "@tailwindcss/typography": "^0.5.16",
+    "@tanstack/react-query": "^5.66.9",
+    "autoprefixer": "^10.4.20",
+    "better-sqlite3": "^11.8.1",
+    "clsx": "^2.1.1",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.40.0",
+    "eslint": "^9.22.0",
+    "eslint-plugin-prettier": "^5.2.3",
+    "luxon": "^3.5.0",
+    "next": "^15.2.1",
+    "prettier": "^3.5.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.54.2",
+    "tailwind-merge": "^3.0.1",
+    "uuid": "^11.1.0",
+    "zod": "^3.24.2",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "drizzle-kit": "^0.31.10",
+    "eslint-config-next": "15.1.7",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0",
+    "postcss": "^8.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5",
+    "vitest": "^4.1.9"
+  }
+}

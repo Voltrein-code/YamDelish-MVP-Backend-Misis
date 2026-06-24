@@ -1,0 +1,68 @@
+{
+  "measuredAt": "2026-06-22T17:06:52.097Z",
+  "environment": "local API, 5 sequential requests per operation",
+  "baseUrl": "http://127.0.0.1:3000",
+  "createdOrderIds": [
+    "0018ce65-463d-49d4-a203-896d4c0f282f",
+    "9ee9c7d7-202d-4615-a987-802e12fdcb8f",
+    "ea86bd67-f4f3-422b-93e8-af7ea639c59b",
+    "c71a296b-ccf7-4d8d-9a43-b1ca4e79b649",
+    "d8e4f979-909b-4ef7-b80b-da2672dd5815"
+  ],
+  "results": [
+    {
+      "endpoint": "restaurants",
+      "iterations": 5,
+      "averageMs": 11.84,
+      "p50Ms": 10.67,
+      "p95Ms": 14.2,
+      "minMs": 9.78,
+      "maxMs": 14.2
+    },
+    {
+      "endpoint": "menu",
+      "iterations": 5,
+      "averageMs": 10.73,
+      "p50Ms": 9.03,
+      "p95Ms": 20.64,
+      "minMs": 6.97,
+      "maxMs": 20.64
+    },
+    {
+      "endpoint": "cart",
+      "iterations": 5,
+      "averageMs": 10.07,
+      "p50Ms": 8.17,
+      "p95Ms": 15.25,
+      "minMs": 7.55,
+      "maxMs": 15.25
+    },
+    {
+      "endpoint": "order-create",
+      "iterations": 5,
+      "averageMs": 20.03,
+      "p50Ms": 18,
+      "p95Ms": 29.21,
+      "minMs": 17.4,
+      "maxMs": 29.21
+    },
+    {
+      "endpoint": "orders",
+      "iterations": 5,
+      "averageMs": 9.85,
+      "p50Ms": 9.42,
+      "p95Ms": 12.02,
+      "minMs": 8.94,
+      "maxMs": 12.02
+    },
+    {
+      "endpoint": "order-details",
+      "iterations": 5,
+      "averageMs": 10.37,
+      "p50Ms": 7.89,
+      "p95Ms": 20.04,
+      "minMs": 7.69,
+      "maxMs": 20.04
+    }
+  ]
+}
