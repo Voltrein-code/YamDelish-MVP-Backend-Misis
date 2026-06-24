@@ -1,0 +1,31 @@
+services:
+  app:
+    build:
+      context: .
+    init: true
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      HOSTNAME: 0.0.0.0
+      PORT: 3000
+      TURSO_DATABASE_URL: "${TURSO_DATABASE_URL:-file:/app/data/sqlite.db}"
+      TURSO_AUTH_TOKEN: "${TURSO_AUTH_TOKEN:-}"
+      AUTH_SECRET: "${AUTH_SECRET:-local-docker-development-secret-change-me}"
+      ALLOW_DEMO_AUTH: "${ALLOW_DEMO_AUTH:-false}"
+    volumes:
+      - yamdelish_data:/app/data
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/api/restaurants').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
+volumes:
+  yamdelish_data:
