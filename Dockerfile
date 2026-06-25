@@ -5,7 +5,8 @@ WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 
 COPY package.json package-lock.json ./
-RUN HUSKY=0 npm ci
+RUN HUSKY=0 npm install --package-lock-only --ignore-scripts \
+  && HUSKY=0 npm ci
 
 COPY . .
 RUN npm run build \
